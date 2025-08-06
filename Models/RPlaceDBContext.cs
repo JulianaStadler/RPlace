@@ -18,11 +18,11 @@ public class RPlaceDbContext(DbContextOptions options) : DbContext(options)
             .HasOne(p => p.Plan)
             .WithMany(p => p.Players)
             .HasForeignKey(p => p.PlanId);
-            
+
         model.Entity<Player>()
-            .HasMany(p => p.Rooms)
-            .WithMany(r => r.Players)
-            .HasForeignKey();
+            .HasMany(p => p.RoomPlayers)
+            .WithOne(r => r.Player)
+            .HasForeignKey(r => r.PlayerId);
 
         model.Entity<Room>()
             .HasOne(r => r.CreatorPlayer)

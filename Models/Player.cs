@@ -12,5 +12,5 @@ public class Player
     public Plan Plan { get; set; }
     public DateTime PlanExpirationDate { get; set; }
 
-    public ICollection<Room> Rooms { get; set; } = []; 
+    public ICollection<RoomPlayer> RoomPlayers { get; set; } = []; 
 }
