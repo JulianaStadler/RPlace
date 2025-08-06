@@ -1,12 +1,7 @@
 namespace RPlace.Models;
 
-public class Permissions
+public class Permission
 {
     public Guid Id {get; set;}
-    public bool Type {get; set;}
-    public bool Invite {get; set;}
-    public bool Remove {get; set;}
-    public bool Promote {get; set;}
-    public bool Paint {get; set;}
-    public bool Watch {get; set;}
+    public string Type {get; set;}
 }
