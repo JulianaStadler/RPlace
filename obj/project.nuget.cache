@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "E1i3L+41lqU=",
+  "dgSpecHash": "ZAcIJUAKhtE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\disrct\\Desktop\\NewRPlace\\RPlace\\rplace.csproj",
+  "projectFilePath": "C:\\Users\\disrct\\Desktop\\RPlace\\rplace.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\disrct\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\disrct\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

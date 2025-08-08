@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\disrct\\Desktop\\NewRPlace\\RPlace\\rplace.csproj": {}
+    "C:\\Users\\disrct\\Desktop\\RPlace\\rplace.csproj": {}
   },
   "projects": {
-    "C:\\Users\\disrct\\Desktop\\NewRPlace\\RPlace\\rplace.csproj": {
+    "C:\\Users\\disrct\\Desktop\\RPlace\\rplace.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\disrct\\Desktop\\NewRPlace\\RPlace\\rplace.csproj",
+        "projectUniqueName": "C:\\Users\\disrct\\Desktop\\RPlace\\rplace.csproj",
         "projectName": "rplace",
-        "projectPath": "C:\\Users\\disrct\\Desktop\\NewRPlace\\RPlace\\rplace.csproj",
+        "projectPath": "C:\\Users\\disrct\\Desktop\\RPlace\\rplace.csproj",
         "packagesPath": "C:\\Users\\disrct\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\disrct\\Desktop\\NewRPlace\\RPlace\\obj\\",
+        "outputPath": "C:\\Users\\disrct\\Desktop\\RPlace\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\disrct\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -83,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.314/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
