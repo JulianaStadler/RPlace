@@ -1,6 +1,6 @@
 namespace RPlace.UseCases.Room.PaintPixel;
 
-public record 
+public record PaintPixelResponse
 {
     
 }

@@ -25,4 +25,7 @@ public record PaintPixelPayload
     [Range(0, 255)]
     public int B {get; init;}
 
+    [Required]
+    public Guid RoomID {get; init;}
+
 }
