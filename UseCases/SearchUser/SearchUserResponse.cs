@@ -1,6 +1,5 @@
+using RPlace.Models;
+
 namespace RPlace.UseCases.SearchUser;
 
-public record SearchUserResponse
-{
-    public class SearchUserResponseViewModel;
-}
+public record SearchUserResponse(Guid PlayerId);
