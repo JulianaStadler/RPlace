@@ -1,0 +1,2 @@
+namespace RPlace.UseCases.SearchUser;
+
