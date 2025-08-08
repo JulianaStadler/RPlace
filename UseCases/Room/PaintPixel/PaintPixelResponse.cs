@@ -1,6 +1,3 @@
 namespace RPlace.UseCases.Room.PaintPixel;
 
-public record PaintPixelResponse
-{
-    
-}
+public record PaintPixelResponse;

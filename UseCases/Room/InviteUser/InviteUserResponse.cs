@@ -1,5 +1,3 @@
 namespace RPlace.UseCases.Room.InviteUser;
 
-public record InviteUserPayload{
-
-}
+public record InviteUserResponse{}
