@@ -6,5 +6,6 @@ public class Room
     public string Name { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
-    public ICollection<Player> Players { get; set; } = [];
+    public ICollection<RoomPlayer> RoomPlayers { get; set; } = [];
+    public ICollection<Pixel> Pixels { get; set; } = [];
 }

@@ -9,5 +9,4 @@ public class RoomPlayer
     public Guid RoomId { get; set; }
     public Permission Permission { get; set; }
     public Guid PermissionId { get; set; }
-
 }

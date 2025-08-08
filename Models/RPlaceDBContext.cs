@@ -17,32 +17,49 @@ public class RPlaceDbContext(DbContextOptions options) : DbContext(options)
         model.Entity<Player>()
             .HasOne(p => p.Plan)
             .WithMany(p => p.Players)
-            .HasForeignKey(p => p.PlanId);
+            .HasForeignKey(p => p.PlanId)
+            .OnDelete(DeleteBehavior.NoAction);
 
-        model.Entity<Player>()
-            .HasMany(p => p.RoomPlayers)
-            .WithOne(r => r.Player)
-            .HasForeignKey(r => r.PlayerId);
+        model.Entity<RoomPlayer>()
+            .HasOne(r => r.Room)
+            .WithMany(r => r.RoomPlayers)
+            .HasForeignKey(r => r.RoomId)
+            .OnDelete(DeleteBehavior.NoAction);
 
-        model.Entity<Room>()
-            .HasOne(r => r.CreatorPlayer)
+        model.Entity<RoomPlayer>()
+            .HasOne(r => r.Player)
+            .WithMany(r => r.RoomPlayers)
+            .HasForeignKey(r => r.PlayerId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        model.Entity<RoomPlayer>()
+            .HasOne(r => r.Permission)
+            .WithMany(p => p.RoomPlayers)
+            .HasForeignKey(r => r.PermissionId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        model.Entity<GiftCard>()
+            .HasOne(g => g.Plan)
+            .WithMany(p => p.GiftCards)
+            .HasForeignKey(g => g.PlanId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        model.Entity<Invite>()
+            .HasOne(i => i.Player)
             .WithMany()
-            .HasForeignKey(r => r.CreatorPlayerId);
+            .HasForeignKey(i => i.PlayerId)
+            .OnDelete(DeleteBehavior.NoAction);
 
-        model.Entity<Plan>();
+        model.Entity<Invite>()
+            .HasOne(i => i.Room)
+            .WithMany()
+            .HasForeignKey(i => i.RoomId)
+            .OnDelete(DeleteBehavior.NoAction);
 
-        model.Entity<Permission>();
-
-        model.Entity<GiftCard>();
-
-        model.Entity<Invite>();
-
-        model.Entity<Pixel>();
-
-        model.Entity<Post>()
-            .HasOne(p => p.Author)
-            .WithMany(p => p.Posts)
-            .HasForeignKey(p => p.ProfileID)
-            .OnDelete(DeleteBehavior.Cascade);
+        model.Entity<Pixel>()
+            .HasOne(p => p.Room)
+            .WithMany(r => r.Pixels)
+            .HasForeignKey(p => p.RoomId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

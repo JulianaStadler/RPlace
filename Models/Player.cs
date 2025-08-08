@@ -11,6 +11,5 @@ public class Player
     public Guid PlanId { get; set; }
     public Plan Plan { get; set; }
     public DateTime PlanExpirationDate { get; set; }
-
     public ICollection<RoomPlayer> RoomPlayers { get; set; } = []; 
 }
