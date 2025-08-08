@@ -1,3 +1,7 @@
+using RPlace.Models;
 namespace RPlace.UseCases.SeeUsers;
 
-public record SeeUser
+public record SeeUserPayload
+{
+    public string UserName { get; init; }
+}
