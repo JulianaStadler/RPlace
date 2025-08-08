@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
-namespace RPlace.UseCases.User;
+namespace RPlace.UseCases.User.CreateRoom;
 
 public record CreateRoomPayload
 {
