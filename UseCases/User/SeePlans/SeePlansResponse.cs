@@ -1,0 +1,3 @@
+namespace RPlace.UseCases.User.SeePlans;
+
+public record SeePlansResponse{}
