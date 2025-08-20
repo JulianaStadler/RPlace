@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using RPlace.UseCases;
-using RPlace.UseCases.SearchUser;
 using RPlace.UseCases.User.CreateUser;
 
 namespace RPlace.Endpoints;
