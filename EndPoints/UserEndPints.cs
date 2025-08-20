@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using RPlace.UseCases.User.CreateUser;
 using RPlace.UseCases.User.DeleteAccount;
 using RPlace.UseCases.User.EditAccount;
-using RPlace.UseCases.User.
-using RPlace.UseCases.User.CreateUser
+using RPlace.UseCases.SeeUser;
+using RPlace.UseCases.User.CreateUser;
 
 namespace RPlace.Endpoints;
 
@@ -17,7 +17,7 @@ public static class UserEndpoints
         // GET: /user/{id}
         app.MapGet("user/{id}", (
             int id,
-            [FromServices] 
+            [FromServices] SeeUserUseCase usecase
         ) =>
         {
             // TODO: Implementar lógica para obter post por ID

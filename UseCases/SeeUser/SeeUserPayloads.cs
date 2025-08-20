@@ -1,5 +1,5 @@
 using RPlace.Models;
-namespace RPlace.UseCases.SeeUsers;
+namespace RPlace.UseCases.SeeUser;
 
 public record SeeUserPayload
 {
