@@ -1,8 +1,8 @@
 using RPlace.Models;
 
-namespace RPlace.Services.Players;
+namespace RPlace.Services.Users;
 
-public interface IPlayerService
+public interface IUsersService
 {
     Task<Player> FindByLogin(string login);
     Task<Guid> Create(Player player);

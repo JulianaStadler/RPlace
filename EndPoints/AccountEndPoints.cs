@@ -33,8 +33,8 @@ public static class AccountEndpoints
 
         // POST: /user
         app.MapPost("profile", async (
-            [FromBody]CreateProfilePayload payload, 
-            [FromServices]CreateProfileUseCase useCase) =>
+            [FromBody]CreateUserPayload payload, 
+            [FromServices]CreateUserUseCase useCase) =>
         {
             var result = await useCase.Do(payload);
             if (result.IsSuccess)
