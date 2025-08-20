@@ -1,5 +1,8 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using RPlace.UseCases;
+using RPlace.UseCases.SearchUser;
+using RPlace.UseCases.User.CreateUser;
 
 namespace RPlace.Endpoints;
 
@@ -7,23 +10,44 @@ public static class AccountEndpoints
 {
     public static void ConfigureAccountEndpoints(this WebApplication app)
     {
-        // GET: /user/{id}
-        app.MapGet("user/{id}", (string id) =>
+        // GET: /user/{username}
+        app.MapGet("user/{username}", async (
+            string username,
+            [FromServices]SearchUserUseCase useCase) =>
         {
-            // TODO: Implementar lógica para obter post por ID
-            return Results.Ok();
+            var payload = new SearchUserPayload();
+            var result = await useCase.Do(payload);
+
+            return (result.IsSuccess, result.Reason) switch
+            {
+                (false, "User not found")  => Results.NotFound(),
+                (false, _) => Results.BadRequest(),
+                (true, _) => Results.Ok(result.Data)
+            };
+
         });
 
+
+
+
+
         // POST: /user
-        app.MapPost("user", async (
-            [FromBody] object CreateUserPayload, // Substituir pelo tipo correto (ex: PublishPostPayload)
-            [FromServices] object CreateUserUseCase // Substituir pelo tipo correto (ex: PublishPostUseCase)
-        ) =>
+        app.MapPost("profile", async (
+            [FromBody]CreateProfilePayload payload, 
+            [FromServices]CreateProfileUseCase useCase) =>
         {
-            // TODO: Implementar lógica para publicar post
-            // Exemplo de retorno padrão:
-            return Results.Ok();
+            var result = await useCase.Do(payload);
+            if (result.IsSuccess)
+                return Results.Created();
+            
+            return Results.BadRequest(result.Reason);
         });
+
+
+
+
+
+
 
         // DELETE: /post/{id}
         app.MapDelete("post/{id}", async (
