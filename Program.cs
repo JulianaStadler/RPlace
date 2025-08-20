@@ -64,8 +64,8 @@ builder.Services.AddTransient<PaintPixelUseCase>();
 builder.Services.AddTransient<RemoveUserUseCase>();
 builder.Services.AddTransient<SeePixelsUseCase>();
 builder.Services.AddTransient<SeePlayersUseCase>();
-builder.Services.AddScoped<SearchUserUseCase>();
-builder.Services.AddScoped<SeeUserUseCase>();
+builder.Services.AddTransient<SearchUserUseCase>();
+builder.Services.AddTransient<SeeUserUseCase>();
 builder.Services.AddTransient<AnswerInviteUseCase>();
 builder.Services.AddTransient<CreateRoomUseCase>();
 builder.Services.AddTransient<CreateUserUseCase>();
@@ -73,9 +73,9 @@ builder.Services.AddTransient<DeleteAccountUseCase>();
 builder.Services.AddTransient<EditAccountUseCase>();
 builder.Services.AddTransient<LoginUseCase>();
 builder.Services.AddTransient<LogoutUseCase>();
-builder.Services.AddScoped<SeeCreatedRoomsUseCase>();
-builder.Services.AddScoped<SeeInviteUseCase>();
-builder.Services.AddScoped<SeePlansUseCase>();
+builder.Services.AddTransient<SeeCreatedRoomsUseCase>();
+builder.Services.AddTransient<SeeInviteUseCase>();
+builder.Services.AddTransient<SeePlansUseCase>();
 builder.Services.AddTransient<UpdatePlanUseCase>();
 
 
