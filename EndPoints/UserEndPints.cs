@@ -42,7 +42,6 @@ public static class UserEndpoints
             return Results.BadRequest(result.Reason);
         });
 
-        /* ------------------------- DELETE ACCOUNT -------------------------*/
         /* ------------------------- CHANGE ACCOUNT -------------------------*/
         /* ------------------------- CHANGE ACCOUNT PLAN -------------------------*/
         /* ------------------------- RETURN ACCOUNT INVITE -------------------------*/
