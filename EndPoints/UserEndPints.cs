@@ -13,15 +13,33 @@ public static class UserEndpoints
     public static void ConfigureRoomEndpoints(this WebApplication app)
     {
         /* ------------------------- CREATE ACCOUNT -------------------------*/
-        /* ------------------------- RETURN ACCOUNT -------------------------*/
-        // GET: /user/{id}
-        app.MapGet("user/{id}", (
-            int id,
-            [FromServices] SeeUserUseCase usecase
+        // POST: /user
+        app.MapPost("user/", async (
+            [FromBody] CreateUserPayload payload, 
+            [FromServices] CreateUserUseCase useCase
         ) =>
         {
-            // TODO: Implementar lógica para obter post por ID
-            return Results.Ok();
+            var result = await useCase.Do(payload);
+            if (result.IsSuccess)
+                return Results.Created();
+            
+            return Results.BadRequest(result.Reason);
+        });
+
+        /* ------------------------- RETURN ACCOUNT -------------------------*/
+        // GET: /user/{id}
+        app.MapGet("user/{id}", async (
+            Guid id,
+            [FromServices] SeeUserUseCase useCase
+        ) =>
+        {
+            var payload = new SeeUserPayload {id = id};
+            var result = await useCase.Do(payload);
+
+            if (result.IsSuccess)
+                return Results.Ok(result.Data);
+            
+            return Results.BadRequest(result.Reason);
         });
 
         /* ------------------------- DELETE ACCOUNT -------------------------*/
