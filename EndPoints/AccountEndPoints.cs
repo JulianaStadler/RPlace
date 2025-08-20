@@ -1,23 +1,23 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Fofoquinha.Endpoints;
+namespace RPlace.Endpoints;
 
-public static class PostEndpoints
+public static class AccountEndpoints
 {
-    public static void ConfigurePostEndpoints(this WebApplication app)
+    public static void ConfigureAccountEndpoints(this WebApplication app)
     {
-        // GET: /post/{id}
-        app.MapGet("post/{id}", (string id) =>
+        // GET: /user/{id}
+        app.MapGet("user/{id}", (string id) =>
         {
             // TODO: Implementar lógica para obter post por ID
             return Results.Ok();
         });
 
-        // POST: /post
-        app.MapPost("post", async (
-            [FromBody] object payload, // Substituir pelo tipo correto (ex: PublishPostPayload)
-            [FromServices] object useCase // Substituir pelo tipo correto (ex: PublishPostUseCase)
+        // POST: /user
+        app.MapPost("user", async (
+            [FromBody] object CreateUserPayload, // Substituir pelo tipo correto (ex: PublishPostPayload)
+            [FromServices] object CreateUserUseCase // Substituir pelo tipo correto (ex: PublishPostUseCase)
         ) =>
         {
             // TODO: Implementar lógica para publicar post
