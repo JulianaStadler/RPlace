@@ -10,27 +10,6 @@ public static class AccountEndpoints
 {
     public static void ConfigureAccountEndpoints(this WebApplication app)
     {
-        // GET: /user/{username}
-        app.MapGet("user/{username}", async (
-            string username,
-            [FromServices]SearchUserUseCase useCase) =>
-        {
-            var payload = new SearchUserPayload();
-            var result = await useCase.Do(payload);
-
-            return (result.IsSuccess, result.Reason) switch
-            {
-                (false, "User not found")  => Results.NotFound(),
-                (false, _) => Results.BadRequest(),
-                (true, _) => Results.Ok(result.Data)
-            };
-
-        });
-
-
-
-
-
         // POST: /user
         app.MapPost("profile", async (
             [FromBody]CreateUserPayload payload, 
@@ -42,11 +21,6 @@ public static class AccountEndpoints
             
             return Results.BadRequest(result.Reason);
         });
-
-
-
-
-
 
 
         // DELETE: /post/{id}
