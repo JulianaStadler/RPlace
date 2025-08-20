@@ -1,7 +1,7 @@
 using RPlace.Models;
-namespace RPlace.UseCases.SeeUsers;
+namespace RPlace.UseCases.SeeUser;
 
 public record SeeUserPayload
 {
-    public string UserName { get; init; }
+    public Guid id { get; init; }
 }
