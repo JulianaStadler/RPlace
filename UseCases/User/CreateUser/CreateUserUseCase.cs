@@ -17,10 +17,11 @@ public class CreateUserUseCase(
             Email = payload.Email,
             Username = payload.Username,
             Password = passwordService.Hash(payload.Password)
-
         };
 
-        return Result<CreateUserResponse>.Success(null);
+        await usersService.Create(user);
+
+        return Result<CreateUserResponse>.Success(new());
     }
 }
 

@@ -1,3 +1,5 @@
 namespace RPlace.UseCases.User.AnswerInvite;
 
-public record AnswerInviteResponse{}
+public record AnswerInviteResponse(
+    Guid RoomId
+);
