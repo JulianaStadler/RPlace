@@ -1,3 +1,16 @@
-namespace RPlace.UseCases.User.UpdatePlan;
+using System.ComponentModel.DataAnnotations;
 
-public record UpdatePlanPayload{}
+namespace RPlace.UseCases.User.UpdatePlanRooms;
+
+public record UpdatePlanPayload
+{
+    [Required]
+    public Guid PlayerId { get; init; }
+
+    [Required]
+    public Guid GiftCardId { get; init; }
+
+    [Required]
+    public string Password { get; init; }
+
+}
