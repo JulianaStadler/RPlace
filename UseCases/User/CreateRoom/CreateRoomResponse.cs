@@ -1,3 +1,5 @@
 namespace RPlace.UseCases.User.CreateRoom;
 
-public record CreateRoomResponse{}
+public record CreateRoomResponse(
+    Guid RoomId
+);
