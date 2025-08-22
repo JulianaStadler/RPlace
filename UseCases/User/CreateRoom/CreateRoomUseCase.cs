@@ -16,7 +16,7 @@ public record CreateRoomUseCase(RPlaceDbContext ctx)
         ctx.Rooms.Add(room);
         await ctx.SaveChangesAsync();
 
-        return Result<CreateRoomResponse>.Success(new());
+        return Result<CreateRoomResponse>.Success(new(room.Id));
     }
 }
 
