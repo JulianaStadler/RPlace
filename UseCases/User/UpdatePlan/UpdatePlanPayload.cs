@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RPlace.UseCases.User.UpdatePlanRooms;
+namespace RPlace.UseCases.User.UpdatePlan;
 
 public record UpdatePlanPayload
 {
