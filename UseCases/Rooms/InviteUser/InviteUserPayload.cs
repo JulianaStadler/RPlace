@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RPlace.UseCases.Room.InviteUser;
+namespace RPlace.UseCases.Rooms.InviteUser;
 
 public record InviteUserPayload{
     [Required]

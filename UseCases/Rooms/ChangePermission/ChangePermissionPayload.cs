@@ -1,4 +1,4 @@
-namespace RPlace.UseCases.Room.ChangePermission;
+namespace RPlace.UseCases.Rooms.ChangePermission;
 using System.ComponentModel.DataAnnotations;
 public record ChangePermissionPayload{
 

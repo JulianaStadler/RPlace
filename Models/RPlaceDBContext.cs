@@ -20,6 +20,7 @@ public class RPlaceDbContext(DbContextOptions options) : DbContext(options)
             .HasForeignKey(p => p.PlanId)
             .OnDelete(DeleteBehavior.NoAction);
 
+
         model.Entity<RoomPlayer>()
             .HasOne(r => r.Room)
             .WithMany(r => r.RoomPlayers)

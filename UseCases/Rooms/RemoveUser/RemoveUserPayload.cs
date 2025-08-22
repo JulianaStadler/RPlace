@@ -1,4 +1,4 @@
-namespace RPlace.UseCases.Room.RemoveUser;
+namespace RPlace.UseCases.Rooms.RemoveUser;
 using System.ComponentModel.DataAnnotations;
 
 

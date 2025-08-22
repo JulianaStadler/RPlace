@@ -1,4 +1,4 @@
-namespace RPlace.UseCases.Room.SeePlayers;
+namespace RPlace.UseCases.Rooms.SeePlayers;
 
 public record SeePlayersUseCase
 {

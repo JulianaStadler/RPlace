@@ -1,4 +1,4 @@
-namespace RPlace.UseCases.Room.PaintPixel;
+namespace RPlace.UseCases.Rooms.PaintPixel;
 using System.ComponentModel.DataAnnotations;
 
 

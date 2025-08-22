@@ -1,6 +1,6 @@
 using RPlace.Models;
 
-namespace RPlace.UseCases.Room.SeePixels;
+namespace RPlace.UseCases.Rooms.SeePixels;
 
 public record SeePixelsUseCase(RPlaceDbContext ctx)
 {

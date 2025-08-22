@@ -1,6 +1,6 @@
 using RPlace.Models;
 
-namespace RPlace.UseCases.Room.InviteUser;
+namespace RPlace.UseCases.Rooms.InviteUser;
 
 public record InviteUserUseCase(RPlaceDbContext ctx)
 {

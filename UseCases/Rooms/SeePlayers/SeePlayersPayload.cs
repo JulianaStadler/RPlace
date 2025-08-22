@@ -1,8 +1,8 @@
-namespace RPlace.UseCases.Room.SeePixels;
+namespace RPlace.UseCases.Rooms.SeePlayers;
 using System.ComponentModel.DataAnnotations;
 
 
-public record SeePixelsPayload
+public record SeePlayersPayload
 {
     [Required]
     public Guid RoomId { get; init; }

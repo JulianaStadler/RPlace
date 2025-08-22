@@ -1,6 +1,6 @@
 using RPlace.Models;
 
-namespace RPlace.UseCases.Room.RemoveUser;
+namespace RPlace.UseCases.Rooms.RemoveUser;
 
 public record RemoveUserUseCase(RPlaceDbContext ctx)
 {

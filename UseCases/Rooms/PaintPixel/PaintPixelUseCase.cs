@@ -1,6 +1,6 @@
 using RPlace.Models;
 
-namespace RPlace.UseCases.Room.PaintPixel;
+namespace RPlace.UseCases.Rooms.PaintPixel;
 
 public record PaintPixelUseCase(RPlaceDbContext ctx)
 {

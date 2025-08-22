@@ -1,6 +1,6 @@
 using RPlace.Models;
 
-namespace RPlace.UseCases.Room.ChangePermission;
+namespace RPlace.UseCases.Rooms.ChangePermission;
 
 public record ChangePermissionUseCase(RPlaceDbContext ctx)
 {
