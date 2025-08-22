@@ -6,7 +6,8 @@ public record EditAccountUseCase(RPlaceDbContext ctx)
 {
     public async Task<Result<EditAccountResponse>> Do(EditAccountPayload payload)
     {
-        //var editi = 
+        var playerID = payload.PlayerId;
+        //var 
 
         return Result<EditAccountResponse>.Success(null);
     }
