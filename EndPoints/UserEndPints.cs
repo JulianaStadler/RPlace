@@ -171,7 +171,7 @@ public static class UserEndpoints
 
             var result = await useCase.Do(payload);
 
-            return Results.Created($"/user/{result.Id}", result);
+            return Results.Created($"/room/{result.RoomId}", result);
         }).RequireAuthorization();
 
         /* ---------------------- SEE CREATED ROOMs -------------------------*/
