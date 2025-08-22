@@ -3,6 +3,9 @@ namespace RPlace.UseCases.User.EditAccount;
 
 public record EditAccountPayload
 {
+    [Required]
+    public Guid PlayerId { get; init; }
+
     [MinLength(5)]
     [MaxLength(20)]
     public string Username { get; init; }
@@ -13,7 +16,7 @@ public record EditAccountPayload
     [MinLength(5)]
     //[NeedNumber]
     public string Password { get; init; }
- 
+
     [Compare("Password")]
     public string RepeatPassword { get; init; }
 
