@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using RPlace.Models;
 
 namespace RPlace.UseCases.User.CreateRoom;
@@ -19,6 +20,4 @@ public record CreateRoomUseCase(RPlaceDbContext ctx)
         return Result<CreateRoomResponse>.Success(new(room.Id));
     }
 }
-
-
 
