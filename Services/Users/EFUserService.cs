@@ -1,6 +1,7 @@
 using RPlace.Models;
 using Microsoft.EntityFrameworkCore;
 using RPlace.UseCases.User.EditAccount;
+using RPlace.Services.Password;
 
 namespace RPlace.Services.Users;
 
@@ -21,35 +22,22 @@ public class EFUserService(RPlaceDbContext ctx) : IUsersService
         return user;
     }
 
-    public async Task<Player> Alter(EditAccountPayload payload)
+    public async Task<Player> Alter(
+        EditAccountPayload payload,
+        IUsersService usersService,
+        IPasswordService passwordService
+        )
     {
         var player = await ctx.Player.FindAsync(payload.PlayerId);
 
         if (player == null)
             throw new Exception("Player não encontrado");
 
-        // player.Username = payload.Username ?? player.Username;
-        // player.Username = payload.Username ?? player.Username;
-        // player.Username = payload.Username ?? player.Username;
-        // player.Username = payload.Username ?? player.Username;
-        // player.Username = payload.Username ?? player.Username;
-
-        if (payload.Email is not null)
-        {
-            player.Email = payload.Email;
-        }
-        if (payload.Password is not null)
-        {
-            player.Password = payload.Password;
-        }
-        if (payload.LinkPicture is not null)
-        {
-            player.LinkPicture = payload.LinkPicture;
-        }
-        if (payload.Bio is not null)
-        {
-            player.Bio = payload.Bio;
-        }
+        player.Username = payload.Username ?? player.Username;
+        player.Email = payload.Email ?? player.Email;
+        player.Password = passwordService.Hash(payload.Password) ?? player.Password;
+        player.LinkPicture = payload.LinkPicture ?? player.LinkPicture;
+        player.Bio = payload.Bio ?? player.Bio;
 
         await ctx.SaveChangesAsync();
         return player;
