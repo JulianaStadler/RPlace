@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace RPlace.UseCases.User.SeeCreatedRooms;
+namespace RPlace.UseCases.User.SeeMyRooms;
 
-public record SeeCreatedRoomsPayload
+public record SeeMyRoomsPayload
 {
     [Required]
     public Guid PlayerId { get; init; }
