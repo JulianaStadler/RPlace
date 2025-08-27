@@ -23,6 +23,7 @@ using RPlace.UseCases.User.SeePlans;
 using RPlace.UseCases.User.UpdatePlan;
 using RPlace.Services.JWT;
 using RPlace.Services.Password;
+using RPlace.Services.Rooms;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -56,6 +57,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddTransient<IPasswordService, PBKDF2PasswordService>();
 builder.Services.AddSingleton<IJWTService, JWTService>();
 // builder.Services.AddTransient<IProfilesService, EFProfileService>();
+builder.Services.AddTransient<IRoomService, EFRoomService>();
+
 
 builder.Services.AddTransient<ChangePermissionUseCase>();
 builder.Services.AddTransient<InviteUserUseCase>();
