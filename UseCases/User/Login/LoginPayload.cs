@@ -4,7 +4,7 @@ namespace RPlace.UseCases.User.Login;
 public record LoginPayload
 {
     [Required]
-    public string Email { get; init; }
+    public string Login { get; init; }
 
     [Required]
     public string Password { get; init; }
