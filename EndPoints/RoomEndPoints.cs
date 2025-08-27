@@ -1,5 +1,11 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using RPlace.UseCases.Rooms.ChangePermission;
+using RPlace.UseCases.Rooms.InviteUser;
+using RPlace.UseCases.Rooms.PaintPixel;
+using RPlace.UseCases.Rooms.RemoveUser;
+using RPlace.UseCases.Rooms.SeePixels;
+using RPlace.UseCases.Rooms.SeePlayers;
 
 namespace RPlace.Endpoints;
 
@@ -7,38 +13,111 @@ public static class RoomEndpoints
 {
     public static void ConfigureRoomEndpoints(this WebApplication app)
     {
-        // GET: /user/{id}
-        app.MapGet("user/{id}", (string id) =>
+        /* ----------------- VER SALA COM TODOS OS PIXELS  ----------------------*/
+        // GET: /room/{id}
+        app.MapGet("/room/{id}", async (
+            Guid id,
+            [FromServices] SeePixelsUseCase useCase
+        ) => 
         {
-            // TODO: Implementar lógica para obter post por ID
-            return Results.Ok();
+            var payload = new SeePixelsPayload { RoomId = id };
+            var result = await useCase.Do(payload);
+
+            if (result.IsSuccess)
+                return Results.Ok(result.Data);
+            
+            return Results.BadRequest(result.Reason);
         });
 
-        // POST: /user
-        app.MapPost("user", async (
-            [FromBody] object CreateUserPayload, // Substituir pelo tipo correto (ex: PublishPostPayload)
-            [FromServices] object CreateUserUseCase // Substituir pelo tipo correto (ex: PublishPostUseCase)
+        /* ----------------------- VER OS PLAYERS DA SALA ---------------------------*/
+        // GET: /room/{id}/players/
+        app.MapGet("/room/{id}/players", async (
+            Guid id,
+            [FromServices] SeePlayersUseCase useCase
         ) =>
         {
-            // TODO: Implementar lógica para publicar post
-            // Exemplo de retorno padrão:
-            return Results.Ok();
+
+            var payload = new SeePlayersPayload();
+            var result = await useCase.Do(payload);
+
+            if (result.IsSuccess)
+                return Results.Ok(result.Data);
+            
+            return Results.BadRequest(result.Reason);
         });
 
-        // DELETE: /post/{id}
-        app.MapDelete("post/{id}", async (
-            string id,
+        /* --------------------- PINTAR PIXEL DA SALA ---------------------------*/
+        // PUT: /room/{id}/pixel
+        app.MapPut("/room/{id}/pixel", async (
+            Guid Id,
             HttpContext http,
-            [FromServices] object useCase // Substituir pelo tipo correto (ex: DeletePostUseCase)
-        ) =>
-        {
-            // TODO: Implementar lógica para deletar post
-            // Exemplo de acesso ao userId via Claims:
-            var claim = http.User.FindFirst(ClaimTypes.NameIdentifier);
-            var userId = claim != null ? Guid.Parse(claim.Value) : Guid.Empty;
+            [FromBody] PaintPixelPayload payload,
+            [FromServices] PaintPixelUseCase useCase  
+        ) => {
+            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
-            return Results.Ok();
         }).RequireAuthorization();
+
+        /* ------------------------ CRIA UMA SALA -------------------------------*/
+        // POST: /room
+        app.MapPost("/room", async (
+            Guid Id,
+            Guid PlayerId,
+            HttpContext http,
+            [FromBody] InviteUserPayload payload,
+            [FromServices] InviteUserUseCase useCase  
+        ) => {
+            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+
+        }).RequireAuthorization();
+
+
+        /* ----------------------- CRIA UM CONVITE ------------------------------*/
+        // POST: /room/{id}/invite/player/{id}
+        app.MapPost("/room/{id}/invite/player/{playerid}", async (
+            Guid Id,
+            Guid PlayerId,
+            HttpContext http,
+            [FromBody] InviteUserPayload payload,
+            [FromServices] InviteUserUseCase useCase  
+        ) => {
+            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+
+        }).RequireAuthorization();
+
+
+        /* ---------- ALTERA AS PERMISSOES DE UM PLAYER NA SALA -----------------*/
+        // PUT: /room/{id}/player/{playerid}
+        app.MapPut("/room/{id}/player/{playerid}", async (
+            Guid Id,
+            Guid PlayerId,
+            HttpContext http,
+            [FromBody] ChangePermissionPayload payload,
+            [FromServices] ChangePermissionUseCase useCase  
+        ) => {
+            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+
+        }).RequireAuthorization();
+
+        /* --------------------- RETIRA UM USER DA SALA -------------------------*/
+        // DELETE: /room/{id}/player/{playerid}
+        app.MapDelete("/room/{id}/player/{playerid}", async (
+            Guid Id,
+            Guid PlayerId,
+            HttpContext http,
+            [FromBody] ChangePermissionPayload payload,
+            [FromServices] ChangePermissionUseCase useCase  
+        ) => {
+            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+
+        }).RequireAuthorization();
+
+
     }
 }
 
