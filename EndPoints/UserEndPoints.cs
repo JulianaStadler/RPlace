@@ -170,7 +170,6 @@ public static class UserEndpoints
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
             var result = await useCase.Do(payload);
-
             return Results.Created($"/room/{result.Data.RoomId}", result);
         }).RequireAuthorization();
 

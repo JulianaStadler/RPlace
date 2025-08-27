@@ -1,16 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace RPlace.Models;
 
 public class RPlaceDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<Player> Player => Set<Player>();
-    public DbSet<Room> Rooms => Set<Room>();
-    public DbSet<Plan> Plans => Set<Plan>();
+    public DbSet<Room> Room => Set<Room>();
+    public DbSet<RoomPlayer> RoomPlayer => Set<RoomPlayer>();
+    public DbSet<Plan> Plan => Set<Plan>();
     public DbSet<Permission> Permissions => Set<Permission>();
-    public DbSet<GiftCard> GiftCards => Set<GiftCard>();
-    public DbSet<Invite> Invites => Set<Invite>();
-    public DbSet<Pixel> Pixels => Set<Pixel>();
+    public DbSet<GiftCard> GiftCard => Set<GiftCard>();
+    public DbSet<Invite> Invite => Set<Invite>();
+    public DbSet<Pixel> Pixel => Set<Pixel>();
 
     protected override void OnModelCreating(ModelBuilder model)
     {
@@ -62,5 +64,16 @@ public class RPlaceDbContext(DbContextOptions options) : DbContext(options)
             .WithMany(r => r.Pixels)
             .HasForeignKey(p => p.RoomId)
             .OnDelete(DeleteBehavior.NoAction);
+    }
+}
+
+public class RPlaceDbContextFactory : IDesignTimeDbContextFactory<RPlaceDbContext>
+{
+    public RPlaceDbContext CreateDbContext(string[] args)
+    {
+        var options = new DbContextOptionsBuilder<RPlaceDbContext>();
+        var sqlConn = Environment.GetEnvironmentVariable("SQL_CONNECTION");
+        options.UseSqlServer(sqlConn);
+        return new RPlaceDbContext(options.Options);
     }
 }

@@ -14,7 +14,7 @@ public record CreateRoomUseCase(RPlaceDbContext ctx)
             Height = payload.Height
         };
 
-        ctx.Rooms.Add(room);
+        ctx.Room.Add(room);
         await ctx.SaveChangesAsync();
 
         return Result<CreateRoomResponse>.Success(new(room.Id));

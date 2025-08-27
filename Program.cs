@@ -10,12 +10,10 @@ using RPlace.UseCases.Rooms.PaintPixel;
 using RPlace.UseCases.Rooms.RemoveUser;
 using RPlace.UseCases.Rooms.SeePixels;
 using RPlace.UseCases.Rooms.SeePlayers;
-using RPlace.UseCases.SearchUser;
-using RPlace.UseCases.SeeUsers;
+using RPlace.UseCases.SeeUser;
 using RPlace.UseCases.User.AnswerInvite;
 using RPlace.UseCases.User.CreateRoom;
 using RPlace.UseCases.User.CreateUser;
-using RPlace.UseCases.User.DeleteAccount;
 using RPlace.UseCases.User.EditAccount;
 using RPlace.UseCases.User.Login;
 using RPlace.UseCases.User.Logout;
@@ -30,6 +28,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddDbContext<RPlaceDbContext>(options => {
     var sqlConn = Environment.GetEnvironmentVariable("SQL_CONNECTION");
     options.UseSqlServer(sqlConn);
@@ -64,12 +63,10 @@ builder.Services.AddTransient<PaintPixelUseCase>();
 builder.Services.AddTransient<RemoveUserUseCase>();
 builder.Services.AddTransient<SeePixelsUseCase>();
 builder.Services.AddTransient<SeePlayersUseCase>();
-builder.Services.AddTransient<SearchUserUseCase>();
 builder.Services.AddTransient<SeeUserUseCase>();
 builder.Services.AddTransient<AnswerInviteUseCase>();
 builder.Services.AddTransient<CreateRoomUseCase>();
 builder.Services.AddTransient<CreateUserUseCase>();
-builder.Services.AddTransient<DeleteAccountUseCase>();
 builder.Services.AddTransient<EditAccountUseCase>();
 builder.Services.AddTransient<LoginUseCase>();
 builder.Services.AddTransient<LogoutUseCase>();
