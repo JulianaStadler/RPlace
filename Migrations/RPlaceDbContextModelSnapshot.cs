@@ -42,7 +42,7 @@ namespace rplace.Migrations
 
                     b.HasIndex("PlanId");
 
-                    b.ToTable("GiftCards");
+                    b.ToTable("GiftCard");
                 });
 
             modelBuilder.Entity("RPlace.Models.Invite", b =>
@@ -63,7 +63,7 @@ namespace rplace.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Invites");
+                    b.ToTable("Invite");
                 });
 
             modelBuilder.Entity("RPlace.Models.Permission", b =>
@@ -109,7 +109,7 @@ namespace rplace.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Pixels");
+                    b.ToTable("Pixel");
                 });
 
             modelBuilder.Entity("RPlace.Models.Plan", b =>
@@ -130,7 +130,7 @@ namespace rplace.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Plans");
+                    b.ToTable("Plan");
                 });
 
             modelBuilder.Entity("RPlace.Models.Player", b =>
@@ -190,7 +190,7 @@ namespace rplace.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Room");
                 });
 
             modelBuilder.Entity("RPlace.Models.RoomPlayer", b =>

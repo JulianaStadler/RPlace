@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace rplace.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialModel : Migration
+    public partial class MIGRATIOFF : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,7 +24,7 @@ namespace rplace.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Plans",
+                name: "Plan",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -34,11 +34,11 @@ namespace rplace.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Plans", x => x.Id);
+                    table.PrimaryKey("PK_Plan", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rooms",
+                name: "Room",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -48,11 +48,11 @@ namespace rplace.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rooms", x => x.Id);
+                    table.PrimaryKey("PK_Room", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "GiftCards",
+                name: "GiftCard",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -62,11 +62,11 @@ namespace rplace.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GiftCards", x => x.Id);
+                    table.PrimaryKey("PK_GiftCard", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GiftCards_Plans_PlanId",
+                        name: "FK_GiftCard_Plan_PlanId",
                         column: x => x.PlanId,
-                        principalTable: "Plans",
+                        principalTable: "Plan",
                         principalColumn: "Id");
                 });
 
@@ -87,14 +87,14 @@ namespace rplace.Migrations
                 {
                     table.PrimaryKey("PK_Player", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Player_Plans_PlanId",
+                        name: "FK_Player_Plan_PlanId",
                         column: x => x.PlanId,
-                        principalTable: "Plans",
+                        principalTable: "Plan",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pixels",
+                name: "Pixel",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -107,16 +107,16 @@ namespace rplace.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pixels", x => x.Id);
+                    table.PrimaryKey("PK_Pixel", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pixels_Rooms_RoomId",
+                        name: "FK_Pixel_Room_RoomId",
                         column: x => x.RoomId,
-                        principalTable: "Rooms",
+                        principalTable: "Room",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Invites",
+                name: "Invite",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -125,16 +125,16 @@ namespace rplace.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invites", x => x.Id);
+                    table.PrimaryKey("PK_Invite", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Invites_Player_PlayerId",
+                        name: "FK_Invite_Player_PlayerId",
                         column: x => x.PlayerId,
                         principalTable: "Player",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Invites_Rooms_RoomId",
+                        name: "FK_Invite_Room_RoomId",
                         column: x => x.RoomId,
-                        principalTable: "Rooms",
+                        principalTable: "Room",
                         principalColumn: "Id");
                 });
 
@@ -161,30 +161,30 @@ namespace rplace.Migrations
                         principalTable: "Player",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RoomPlayer_Rooms_RoomId",
+                        name: "FK_RoomPlayer_Room_RoomId",
                         column: x => x.RoomId,
-                        principalTable: "Rooms",
+                        principalTable: "Room",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GiftCards_PlanId",
-                table: "GiftCards",
+                name: "IX_GiftCard_PlanId",
+                table: "GiftCard",
                 column: "PlanId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invites_PlayerId",
-                table: "Invites",
+                name: "IX_Invite_PlayerId",
+                table: "Invite",
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invites_RoomId",
-                table: "Invites",
+                name: "IX_Invite_RoomId",
+                table: "Invite",
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pixels_RoomId",
-                table: "Pixels",
+                name: "IX_Pixel_RoomId",
+                table: "Pixel",
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
@@ -212,13 +212,13 @@ namespace rplace.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GiftCards");
+                name: "GiftCard");
 
             migrationBuilder.DropTable(
-                name: "Invites");
+                name: "Invite");
 
             migrationBuilder.DropTable(
-                name: "Pixels");
+                name: "Pixel");
 
             migrationBuilder.DropTable(
                 name: "RoomPlayer");
@@ -230,10 +230,10 @@ namespace rplace.Migrations
                 name: "Player");
 
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "Room");
 
             migrationBuilder.DropTable(
-                name: "Plans");
+                name: "Plan");
         }
     }
 }
