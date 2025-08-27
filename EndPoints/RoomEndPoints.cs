@@ -6,6 +6,7 @@ using RPlace.UseCases.Rooms.PaintPixel;
 using RPlace.UseCases.Rooms.RemoveUser;
 using RPlace.UseCases.Rooms.SeePixels;
 using RPlace.UseCases.Rooms.SeePlayers;
+using RPlace.Services.Rooms;
 
 namespace RPlace.Endpoints;
 
@@ -17,34 +18,54 @@ public static class RoomEndpoints
         // GET: /room/{id}
         app.MapGet("/room/{id}", async (
             Guid id,
-            [FromServices] SeePixelsUseCase useCase
+            HttpContext http,
+            [FromServices] SeePixelsUseCase useCase,
+            [FromServices] IRoomService roomService
         ) => 
         {
-            var payload = new SeePixelsPayload { RoomId = id };
+            var roomIdService = await roomService.FindById(id);
+            if (roomIdService == null) 
+                return Results.NotFound("Room not found");
+
+            var roomId = roomIdService.Id;
+            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+
+            var payload = new SeePixelsPayload { RoomId = roomId };
             var result = await useCase.Do(payload);
 
             if (result.IsSuccess)
                 return Results.Ok(result.Data);
             
             return Results.BadRequest(result.Reason);
-        });
+        }).RequireAuthorization();
 
         /* ----------------------- VER OS PLAYERS DA SALA ---------------------------*/
         // GET: /room/{id}/players/
         app.MapGet("/room/{id}/players", async (
-            Guid id,
-            [FromServices] SeePlayersUseCase useCase
-        ) =>
+            Guid Id,
+            HttpContext http,
+            [FromServices] SeePlayersUseCase useCase,
+            [FromServices] IRoomService roomService
+        ) => 
         {
+            var roomIdService = await roomService.FindById(Id);
+            if (roomIdService == null) 
+                return Results.NotFound("Room not found");
 
-            var payload = new SeePlayersPayload();
+            var roomId = roomIdService.Id;
+            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+
+
+            var payload = new SeePlayersPayload { RoomId = roomId };
             var result = await useCase.Do(payload);
 
             if (result.IsSuccess)
                 return Results.Ok(result.Data);
             
             return Results.BadRequest(result.Reason);
-        });
+        }).RequireAuthorization();
 
         /* --------------------- PINTAR PIXEL DA SALA ---------------------------*/
         // PUT: /room/{id}/pixel
@@ -52,11 +73,26 @@ public static class RoomEndpoints
             Guid Id,
             HttpContext http,
             [FromBody] PaintPixelPayload payload,
-            [FromServices] PaintPixelUseCase useCase  
-        ) => {
+            [FromServices] PaintPixelUseCase useCase,
+            [FromServices] IRoomService roomService
+        ) => 
+        {
+            var roomIdService = await roomService.FindById(Id);
+            if (roomIdService == null) 
+                return Results.NotFound("Room not found");
+
+            var roomId = roomIdService.Id;
+
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
+            var payload = useCase.Do(RoomId = roomId );
+            var result = await useCase.Do(payload);
+
+            if (result.IsSuccess)
+                return Results.Ok(result.Data);
+            
+            return Results.BadRequest(result.Reason);
         }).RequireAuthorization();
 
         /* ------------------------ CRIA UMA SALA -------------------------------*/
@@ -66,8 +102,16 @@ public static class RoomEndpoints
             Guid PlayerId,
             HttpContext http,
             [FromBody] InviteUserPayload payload,
-            [FromServices] InviteUserUseCase useCase  
-        ) => {
+            [FromServices] InviteUserUseCase useCase,
+            [FromServices] IRoomService roomService
+        ) => 
+        {
+            var roomIdService = await roomService.FindById(Id);
+            if (roomIdService == null) 
+                return Results.NotFound("Room not found");
+
+            var roomId = roomIdService.Id;
+
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
@@ -81,8 +125,16 @@ public static class RoomEndpoints
             Guid PlayerId,
             HttpContext http,
             [FromBody] InviteUserPayload payload,
-            [FromServices] InviteUserUseCase useCase  
-        ) => {
+            [FromServices] InviteUserUseCase useCase,
+            [FromServices] IRoomService roomService
+        ) => 
+        {
+            var roomIdService = await roomService.FindById(Id);
+            if (roomIdService == null) 
+                return Results.NotFound("Room not found");
+
+            var roomId = roomIdService.Id;
+
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
@@ -96,8 +148,16 @@ public static class RoomEndpoints
             Guid PlayerId,
             HttpContext http,
             [FromBody] ChangePermissionPayload payload,
-            [FromServices] ChangePermissionUseCase useCase  
-        ) => {
+            [FromServices] ChangePermissionUseCase useCase,
+            [FromServices] IRoomService roomService
+        ) => 
+        {
+            var roomIdService = await roomService.FindById(Id);
+            if (roomIdService == null) 
+                return Results.NotFound("Room not found");
+
+            var roomId = roomIdService.Id;
+
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
@@ -110,8 +170,16 @@ public static class RoomEndpoints
             Guid PlayerId,
             HttpContext http,
             [FromBody] ChangePermissionPayload payload,
-            [FromServices] ChangePermissionUseCase useCase  
-        ) => {
+            [FromServices] ChangePermissionUseCase useCase,
+            [FromServices] IRoomService roomService
+        ) => 
+        {
+            var roomIdService = await roomService.FindById(Id);
+            if (roomIdService == null) 
+                return Results.NotFound("Room not found");
+
+            var roomId = roomIdService.Id;
+
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
