@@ -212,7 +212,11 @@ public static class UserEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
+<<<<<<< HEAD
             var payload = new SeeMyRoomsPayload();
+=======
+            var payload = new SeeMyRoomsPayload{PlayerId = userId};
+>>>>>>> 85b0bf8c88e90b43703ba643fcc64692fa47dc4a
             var result = await useCase.Do(payload);
 
             if (result.IsSuccess)

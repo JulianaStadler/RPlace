@@ -20,6 +20,14 @@ public class EFUserService(RPlaceDbContext ctx) : IUsersService
             p => p.Username == login || p.Email == login
         );
         return user;
+    
+    }
+    public async Task<Player> FindById(Guid id)
+    {
+        var user = await ctx.Player.FirstOrDefaultAsync(
+            p => p.Id == id
+        );
+        return user;
     }
 
     public async Task<Player> Alter(

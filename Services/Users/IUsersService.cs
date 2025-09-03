@@ -7,6 +7,7 @@ namespace RPlace.Services.Users;
 public interface IUsersService
 {
     Task<Player> FindByLogin(string login);
+    Task<Player> FindById(Guid id);
     Task<Guid> Create(Player player);
     Task<Player> Alter(EditAccountPayload payload, IUsersService usersService, IPasswordService passwordService);
 }
