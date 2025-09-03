@@ -20,6 +20,7 @@ using RPlace.UseCases.User.SeeInvite;
 using RPlace.UseCases.User.SeeAllInvites;
 using RPlace.UseCases.User.SeePlans;
 using RPlace.UseCases.User.UpdatePlan;
+using RPlace.UseCases.User.SeeMyRooms;
 using RPlace.Services.JWT;
 using RPlace.Services.Password;
 using RPlace.Services.Rooms;
@@ -74,6 +75,7 @@ builder.Services.AddTransient<SeeInviteUseCase>();
 builder.Services.AddTransient<SeeAllInvitesUseCase>();
 builder.Services.AddTransient<SeePlansUseCase>();
 builder.Services.AddTransient<UpdatePlanUseCase>();
+builder.Services.AddTransient<SeeMyRoomsUseCase>();
 
 
 

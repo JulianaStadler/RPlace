@@ -8,7 +8,7 @@ using RPlace.UseCases.User.SeeInvite;
 using RPlace.UseCases.User.SeeAllInvites;
 using RPlace.UseCases.User.AnswerInvite;
 using RPlace.UseCases.User.CreateRoom;
-using RPlace.UseCases.User.SeeCreatedRooms;
+using RPlace.UseCases.User.SeeMyRooms;
 using RPlace.UseCases.SeeUser;
 using RPlace.Models;
 
@@ -206,7 +206,7 @@ public static class UserEndpoints
         app.MapGet("user/{id}/room/", async (
             Guid id,
             HttpContext http,
-            [FromServices] SeeCreatedRoomsUseCase useCase
+            [FromServices] SeeMyRoomsUseCase useCase
         ) =>
         {
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
