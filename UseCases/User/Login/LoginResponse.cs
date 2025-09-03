@@ -1,3 +1,5 @@
 namespace RPlace.UseCases.User.Login;
 
-public record LoginResponse(string Token);
+public record LoginResponse(
+    string Token
+);

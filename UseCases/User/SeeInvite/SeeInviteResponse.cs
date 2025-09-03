@@ -1,3 +1,5 @@
 namespace RPlace.UseCases.User.SeeInvite;
 
-public record SeeInviteResponse{}
+public record SeeInviteResponse(
+    string RoomName
+);

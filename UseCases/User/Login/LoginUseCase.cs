@@ -5,10 +5,7 @@ using RPlace.Services.JWT;
 
 namespace RPlace.UseCases.User.Login;
 
-public record LoginUseCase(
-    IUsersService userService,
-    IPasswordService passwordService,
-    IJWTService jWTService)
+public record LoginUseCase(IUsersService userService, IPasswordService passwordService, IJWTService jWTService)
 {
     public async Task<Result<LoginResponse>> Do(LoginPayload payload)
     {
