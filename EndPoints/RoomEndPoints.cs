@@ -24,14 +24,7 @@ public static class RoomEndpoints
             [FromServices] IRoomService roomService
         ) => 
         {
-            var roomIdService = await roomService.FindById(id);
-            if (roomIdService == null) 
-                return Results.NotFound("Room not found");
-
-            var roomId = roomIdService.Id;
-            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
-            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
-
+            
             var payload = new SeePixelsPayload { RoomId = roomId };
             var result = await useCase.Do(payload);
 
@@ -90,6 +83,8 @@ public static class RoomEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
+            /*VALIDAR SE USER EXISTE NA SALA*/
+
             payload = payload with { RoomId = roomId };
             var result = await useCase.Do(payload);
 
@@ -121,6 +116,8 @@ public static class RoomEndpoints
 
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+
+            /*VALIDAR SE USER EXISTE NA SALA*/
 
             payload = payload with {
                 RoomId = roomId,
