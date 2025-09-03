@@ -79,15 +79,18 @@ builder.Services.AddTransient<SeePlansUseCase>();
 builder.Services.AddTransient<UpdatePlanUseCase>();
 builder.Services.AddTransient<SeeMyRoomsUseCase>();
 
-
-
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.Run();
