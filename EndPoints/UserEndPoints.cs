@@ -9,6 +9,7 @@ using RPlace.UseCases.User.AnswerInvite;
 using RPlace.UseCases.User.CreateRoom;
 using RPlace.UseCases.User.SeeCreatedRooms;
 using RPlace.UseCases.SeeUser;
+using RPlace.Models;
 
 namespace RPlace.Endpoints;
 
@@ -113,10 +114,31 @@ public static class UserEndpoints
 
         }).RequireAuthorization();
 
-        /* ------------------------- SEE INVITES -------------------------*/
+        /* ------------------------- ALL INVITES -------------------------*/
         //GET: user/{id}/invite/
         app.MapGet("user/{id}/invite/", async (
             Guid id,
+            HttpContext http,
+            [FromServices] SeeInvitesUseCase useCase
+        ) =>
+        {
+            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+
+            var payload = new SeeInvitePayload();
+            var result = await useCase.Do(payload);
+
+            if (result.IsSuccess)
+                return Results.Ok(result.Data);
+            
+            return Results.BadRequest(result.Reason);
+        }).RequireAuthorization();
+
+        /* ------------------------- SEE INVITE -------------------------*/
+        //GET: user/{id}/invite/{idInvite}
+        app.MapGet("user/{id}/invite/{idInvite}", async (
+            Guid id,
+            Guid idInvite,
             HttpContext http,
             [FromServices] SeeInviteUseCase useCase
         ) =>
@@ -152,10 +174,10 @@ public static class UserEndpoints
             {
                 (false, "User not found") => Results.NotFound(),
                 (false, _) => Results.BadRequest(),
-                (true, _) => Results.Ok()
+                (true, _) => Results.Ok(new {RoomId = result.Data.RoomId})
             };
-
         }).RequireAuthorization();
+
 
         /* ------------------------- CREATE ROOM -------------------------*/
         //POST: user/{id}/room/

@@ -18,6 +18,7 @@ using RPlace.UseCases.User.EditAccount;
 using RPlace.UseCases.User.Login;
 using RPlace.UseCases.User.Logout;
 using RPlace.UseCases.User.SeeInvite;
+using RPlace.UseCases.User.SeeAllInvites;
 using RPlace.UseCases.User.SeePlans;
 using RPlace.UseCases.User.UpdatePlan;
 using RPlace.Services.JWT;
@@ -72,6 +73,7 @@ builder.Services.AddTransient<EditAccountUseCase>();
 builder.Services.AddTransient<LoginUseCase>();
 builder.Services.AddTransient<LogoutUseCase>();
 builder.Services.AddTransient<SeeInviteUseCase>();
+builder.Services.AddTransient<SeeAllInvitesUseCase>();
 builder.Services.AddTransient<SeePlansUseCase>();
 builder.Services.AddTransient<UpdatePlanUseCase>();
 
