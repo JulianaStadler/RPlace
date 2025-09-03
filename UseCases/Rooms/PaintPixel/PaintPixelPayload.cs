@@ -26,6 +26,6 @@ public record PaintPixelPayload
     public int B {get; init;}
 
     [Required]
-    public Guid RoomID {get; init;}
+    public Guid RoomId {get; init;}
 
 }

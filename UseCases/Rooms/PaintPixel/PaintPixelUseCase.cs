@@ -8,4 +8,9 @@ public record PaintPixelUseCase(RPlaceDbContext ctx)
     {
         return Result<PaintPixelResponse>.Success(null);
     }
+
+    internal PaintPixelPayload Do(object value)
+    {
+        throw new NotImplementedException();
+    }
 }

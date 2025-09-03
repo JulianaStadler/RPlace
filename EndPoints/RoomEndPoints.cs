@@ -34,10 +34,14 @@ public static class RoomEndpoints
             var payload = new SeePixelsPayload { RoomId = roomId };
             var result = await useCase.Do(payload);
 
-            if (result.IsSuccess)
-                return Results.Ok(result.Data);
-            
-            return Results.BadRequest(result.Reason);
+
+            return (result.IsSuccess, result.Reason) switch
+            {
+                (false, "User not found") => Results.NotFound(),
+                (false, _) => Results.BadRequest(result.Reason),
+                (true, _) => Results.Ok(result.Data)
+            };
+
         }).RequireAuthorization();
 
         /* ----------------------- VER OS PLAYERS DA SALA ---------------------------*/
@@ -80,43 +84,22 @@ public static class RoomEndpoints
             var roomIdService = await roomService.FindById(Id);
             if (roomIdService == null) 
                 return Results.NotFound("Room not found");
-
             var roomId = roomIdService.Id;
 
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
-            var payload = useCase.Do(RoomId = roomId );
+            payload = payload with { RoomId = roomId };
             var result = await useCase.Do(payload);
 
-            if (result.IsSuccess)
-                return Results.Ok(result.Data);
-            
-            return Results.BadRequest(result.Reason);
+
+            return (result.IsSuccess, result.Reason) switch
+            {
+                (false, "User not found") => Results.NotFound(),
+                (false, _) => Results.BadRequest(result.Reason),
+                (true, _) => Results.Ok(result.Data)
+            };
         }).RequireAuthorization();
-
-        /* ------------------------ CRIA UMA SALA -------------------------------*/
-        // POST: /room
-        app.MapPost("/room", async (
-            Guid Id,
-            Guid PlayerId,
-            HttpContext http,
-            [FromBody] InviteUserPayload payload,
-            [FromServices] InviteUserUseCase useCase,
-            [FromServices] IRoomService roomService
-        ) => 
-        {
-            var roomIdService = await roomService.FindById(Id);
-            if (roomIdService == null) 
-                return Results.NotFound("Room not found");
-
-            var roomId = roomIdService.Id;
-
-            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
-            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
-
-        }).RequireAuthorization();
-
 
         /* ----------------------- CRIA UM CONVITE ------------------------------*/
         // POST: /room/{id}/invite/player/{id}
@@ -138,6 +121,18 @@ public static class RoomEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
+            payload = payload with {
+                RoomId = roomId,
+                RequestUserId = Id
+            };
+            var result = await useCase.Do(payload);
+
+            return (result.IsSuccess, result.Reason) switch
+            {
+                (false, "User not found") => Results.NotFound(),
+                (false, _) => Results.BadRequest(result.Reason),
+                (true, _) => Results.Ok(result.Data)
+            };
         }).RequireAuthorization();
 
 
