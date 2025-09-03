@@ -4,10 +4,7 @@ using RPlace.Services.Users;
 
 namespace RPlace.UseCases.User.CreateUser;
 
-public class CreateUserUseCase(
-    IUsersService usersService,
-    IPasswordService passwordService
-)
+public class CreateUserUseCase(IUsersService usersService, IPasswordService passwordService)
 {
     public async Task<Result<CreateUserResponse>> Do(CreateUserPayload payload)
     {
@@ -21,7 +18,7 @@ public class CreateUserUseCase(
 
         await usersService.Create(user);
 
-        return Result<CreateUserResponse>.Success(new());
+        return Result<CreateUserResponse>.Success(new(user.Id));
     }
 }
 
