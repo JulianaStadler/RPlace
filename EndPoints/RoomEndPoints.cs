@@ -7,6 +7,7 @@ using RPlace.UseCases.Rooms.RemoveUser;
 using RPlace.UseCases.Rooms.SeePixels;
 using RPlace.UseCases.Rooms.SeePlayers;
 using RPlace.Services.Rooms;
+using RPlace.Services.Users;
 
 namespace RPlace.Endpoints;
 
@@ -131,7 +132,7 @@ public static class RoomEndpoints
             {
                 (false, "User not found") => Results.NotFound(),
                 (false, _) => Results.BadRequest(result.Reason),
-                (true, _) => Results.Ok(result.Data)
+                (true, _) => Results.Ok()
             };
         }).RequireAuthorization();
 
@@ -156,28 +157,53 @@ public static class RoomEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
+            payload = payload with {
+                UserId = userId,
+                RoomId = roomId
+            };
+            var result = await useCase.Do(payload);
+
+            return (result.IsSuccess, result.Reason) switch
+            {
+                (false, "User not found") => Results.NotFound(),
+                (false, _) => Results.BadRequest(result.Reason),
+                (true, _) => Results.Ok()
+            };
         }).RequireAuthorization();
 
         /* --------------------- RETIRA UM USER DA SALA -------------------------*/
         // DELETE: /room/{id}/player/{playerid}
         app.MapDelete("/room/{id}/player/{playerid}", async (
-            Guid Id,
-            Guid PlayerId,
+            Guid RoomId,
+            Guid DeletePlayerId,
             HttpContext http,
-            [FromBody] ChangePermissionPayload payload,
-            [FromServices] ChangePermissionUseCase useCase,
-            [FromServices] IRoomService roomService
+            [FromServices] RemoveUserUseCase useCase,
+            [FromServices] IRoomService roomService,
+            [FromServices] IUsersService userService
         ) => 
         {
-            var roomIdService = await roomService.FindById(Id);
+            var roomIdService = await roomService.FindById(RoomId);
             if (roomIdService == null) 
                 return Results.NotFound("Room not found");
-
             var roomId = roomIdService.Id;
 
-            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
-            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+            var userIdService = await userService.FindById(DeletePlayerId);
+            if (userIdService == null) 
+                return Results.NotFound("User not found");
+            var userId = userIdService.Id;
 
+            var payload = new RemoveUserPayload {
+                UserId = userId,
+                RoomId = roomId
+            };
+            var result = await useCase.Do(payload);
+
+            return (result.IsSuccess, result.Reason) switch
+            {
+                (false, "User not found") => Results.NotFound(),
+                (false, _) => Results.BadRequest(result.Reason),
+                (true, _) => Results.Ok()
+            };
         }).RequireAuthorization();
 
 
