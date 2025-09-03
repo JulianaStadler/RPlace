@@ -24,14 +24,13 @@ public static class RoomEndpoints
             [FromServices] IRoomService roomService
         ) => 
         {
-            
+
             var payload = new SeePixelsPayload { RoomId = roomId };
             var result = await useCase.Do(payload);
 
 
             return (result.IsSuccess, result.Reason) switch
             {
-                (false, "User not found") => Results.NotFound(),
                 (false, _) => Results.BadRequest(result.Reason),
                 (true, _) => Results.Ok(result.Data)
             };
@@ -118,7 +117,7 @@ public static class RoomEndpoints
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
             /*VALIDAR SE USER EXISTE NA SALA*/
-
+            
             payload = payload with {
                 RoomId = roomId,
                 RequestUserId = Id

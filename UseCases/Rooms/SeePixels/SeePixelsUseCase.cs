@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RPlace.Models;
 using RPlace.Services.Rooms;
 using RPlace.Services.Users;
@@ -9,15 +10,19 @@ public record SeePixelsUseCase(RPlaceDbContext ctx, EFRoomService roomService)
 {
     public async Task<Result<SeePixelsResponse>> Do(SeePixelsPayload payload)
     {
-        var roomIdService = await roomService.FindById(id);
-            if (roomIdService == null) 
-                return Results.NotFound("Room not found");
-
-            var roomId = roomIdService.Id;
-            var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
-            var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
+        var roomIdService = await roomService.FindById(payload.RoomId);
+        if (roomIdService == null) 
+            return Result<SeePixelsResponse>.Fail("No rooms");
+        var roomId = roomIdService.Id;
 
 
-        return Result<SeePixelsResponse>.Success(null);
+        var picture = await ctx.Room
+            .Include(r => r.Pixels)
+            .ToArrayAsync();
+
+        if (picture is null)
+            return Result<SeePixelsResponse>.Fail("No avaliable picture");
+
+        return Result<SeePixelsResponse>.Success(new(PicturePixels));
     }
 }
