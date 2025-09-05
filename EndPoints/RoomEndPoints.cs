@@ -23,10 +23,8 @@ public static class RoomEndpoints
             [FromServices] SeePixelsUseCase useCase
         ) => 
         {
-
             var payload = new SeePixelsPayload { RoomId = id };
             var result = await useCase.Do(payload);
-
 
             return (result.IsSuccess, result.Reason) switch
             {
@@ -41,28 +39,26 @@ public static class RoomEndpoints
         /* ----------------------- VER OS PLAYERS DA SALA ---------------------------*/
         // GET: /room/{id}/players/
         app.MapGet("/room/{id}/players", async (
-            Guid Id,
+            Guid id,
             HttpContext http,
-            [FromServices] SeePlayersUseCase useCase,
-            [FromServices] IRoomService roomService
+            [FromServices] SeePlayersUseCase useCase
         ) => 
         {
-            var roomIdService = await roomService.FindById(Id);
-            if (roomIdService == null) 
-                return Results.NotFound("Room not found");
-
-            var roomId = roomIdService.Id;
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
 
-            var payload = new SeePlayersPayload { RoomId = roomId };
+            var payload = new SeePlayersPayload { RoomId = id };
             var result = await useCase.Do(payload);
 
-            if (result.IsSuccess)
-                return Results.Ok(result.Data);
-            
-            return Results.BadRequest(result.Reason);
+            return (result.IsSuccess, result.Reason) switch
+            {
+                (false, "Room not found") => Results.NotFound(result.Reason),
+                (false, "No avaliable picture") => Results.NotFound(result.Reason),
+                (false, _) => Results.BadRequest(result.Reason),
+                (true, _) => Results.Ok(result.Data)
+            };
+
         }).RequireAuthorization();
 
         /* --------------------- PINTAR PIXEL DA SALA ---------------------------*/
