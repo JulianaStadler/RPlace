@@ -3,7 +3,7 @@ using RPlace.Services.Rooms;
 
 namespace RPlace.UseCases.Rooms.PaintPixel;
 
-public record PaintPixelUseCase(RPlaceDbContext ctx, EFRoomService roomService)
+public class PaintPixelUseCase(RPlaceDbContext ctx, IRoomService roomService)
 {
     public async Task<Result<PaintPixelResponse>> Do(PaintPixelPayload payload)
     {
@@ -15,8 +15,8 @@ public record PaintPixelUseCase(RPlaceDbContext ctx, EFRoomService roomService)
         if (ThisPlayerExists == false) 
             return Result<PaintPixelResponse>.Fail("You are not in this room!");
 
-        if(payload.X > roomObj.X || payload.X <= roomObj.X)
-            return Result<PaintPixelResponse>.Fail("This pixel dont exist");
+        // if(payload.X > roomObj.X || payload.X <= roomObj.X)
+        //     return Result<PaintPixelResponse>.Fail("This pixel dont exist");
 
 
         return Result<PaintPixelResponse>.Success(null);

@@ -6,7 +6,7 @@ using RPlace.Services.Users;
 
 namespace RPlace.UseCases.Rooms.SeePixels;
 
-public record SeePixelsUseCase(RPlaceDbContext ctx, EFRoomService roomService)
+public record SeePixelsUseCase(RPlaceDbContext ctx, IRoomService roomService)
 {
     public async Task<Result<SeePixelsResponse>> Do(SeePixelsPayload payload)
     {

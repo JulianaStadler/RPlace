@@ -16,7 +16,7 @@ namespace RPlace.Endpoints;
 
 public static class UserEndpoints
 {
-    public static void ConfigureRoomEndpoints(this WebApplication app)
+    public static void ConfigureUserEndpoints(this WebApplication app)
     {
         /* ----------------------- CREATE ACCOUNT -------------------------*/
         // POST: /user

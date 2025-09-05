@@ -4,7 +4,7 @@ using RPlace.Services.Rooms;
 
 namespace RPlace.UseCases.Rooms.SeePlayers;
 
-public record SeePlayersUseCase(RPlaceDbContext ctx, EFRoomService roomService)
+public record SeePlayersUseCase(RPlaceDbContext ctx, IRoomService roomService)
 {
     public async Task<Result<SeePlayersResponse>> Do(SeePlayersPayload payload)
     {

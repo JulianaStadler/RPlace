@@ -28,6 +28,7 @@ using RPlace.Services.Users;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using RPlace.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,6 +87,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.ConfigureAuthEndpoints();
+app.ConfigureRoomEndpoints();
+app.ConfigureUserEndpoints();
 
 app.UseAuthentication();
 app.UseAuthorization();
