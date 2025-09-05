@@ -17,12 +17,23 @@ public record SeePixelsUseCase(RPlaceDbContext ctx, EFRoomService roomService)
 
 
         var picture = await ctx.Room
-            .Include(r => r.Pixels)
+            .Where(r => r.Id == roomId)
+            .SelectMany(r => r.Pixels)
+            .Select(p => new PicturePixels
+            {
+                PixelId = p.Id,
+                X = p.X,
+                Y = p.Y,
+                R = p.R,
+                G = p.G,
+                B = p.B
+            })
             .ToArrayAsync();
+            
 
         if (picture is null)
             return Result<SeePixelsResponse>.Fail("No avaliable picture");
 
-        return Result<SeePixelsResponse>.Success(new(PicturePixels));
+        return Result<SeePixelsResponse>.Success(new(picture));
     }
 }

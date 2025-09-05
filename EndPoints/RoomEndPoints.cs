@@ -28,6 +28,8 @@ public static class RoomEndpoints
 
             return (result.IsSuccess, result.Reason) switch
             {
+                (false, "No rooms") => Results.NotFound(result.Reason),
+                (false, "No avaliable picture") => Results.NotFound(result.Reason),
                 (false, _) => Results.BadRequest(result.Reason),
                 (true, _) => Results.Ok(result.Data)
             };
@@ -39,11 +41,10 @@ public static class RoomEndpoints
         app.MapGet("/room/{id}/players", async (
             Guid id,
             HttpContext http,
-            [FromServices] SeePlayersUseCase useCase,
-            [FromServices] IRoomService roomService
+            [FromServices] SeePlayersUseCase useCase
         ) => 
         {
-            var roomIdService = await roomService.FindById(id);
+            var roomIdService = await roomService.FindById(Id);
             if (roomIdService == null) 
                 return Results.NotFound("Room not found");
 
@@ -52,13 +53,17 @@ public static class RoomEndpoints
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
 
-            var payload = new SeePlayersPayload { RoomId = roomId };
+            var payload = new SeePlayersPayload { RoomId = id };
             var result = await useCase.Do(payload);
 
-            if (result.IsSuccess)
-                return Results.Ok(result.Data);
-            
-            return Results.BadRequest(result.Reason);
+            return (result.IsSuccess, result.Reason) switch
+            {
+                (false, "Room not found") => Results.NotFound(result.Reason),
+                (false, "No avaliable picture") => Results.NotFound(result.Reason),
+                (false, _) => Results.BadRequest(result.Reason),
+                (true, _) => Results.Ok(result.Data)
+            };
+
         }).RequireAuthorization();
 
         /* --------------------- PINTAR PIXEL DA SALA ---------------------------*/
