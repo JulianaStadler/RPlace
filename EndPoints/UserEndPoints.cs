@@ -21,35 +21,35 @@ public static class UserEndpoints
         /* ----------------------- CREATE ACCOUNT -------------------------*/
         // POST: /user
         app.MapPost("user/", async (
-            [FromBody] CreateUserPayload payload, 
+            [FromBody] CreateUserPayload payload,
             [FromServices] CreateUserUseCase useCase
         ) =>
         {
             var result = await useCase.Do(payload);
             if (result.IsSuccess)
                 return Results.Created();
-            
+
             return Results.BadRequest(result.Reason);
         });
 
-        /* ------------------------ RETURN ACCOUNT -------------------------*/
+        /* ------------------------ SEE USER -------------------------*/
         // GET: /user/{id}
         app.MapGet("user/{id}", async (
             Guid id,
             [FromServices] SeeUserUseCase useCase
         ) =>
         {
-            var payload = new SeeUserPayload {PlayerId = id};
+            var payload = new SeeUserPayload { PlayerId = id };
             var result = await useCase.Do(payload);
 
             if (result.IsSuccess)
                 return Results.Ok(result.Data);
-            
+
             return Results.BadRequest(result.Reason);
         });
 
         /* ------------------------ EDIT ACCOUNT -------------------------*/
-        app.MapPut("user/{id}", async(
+        app.MapPut("user/{id}", async (
             Guid id,
             HttpContext http,
             [FromBody] EditAccountPayload payload,
@@ -59,12 +59,12 @@ public static class UserEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
-            payload = payload with {PlayerId = userId};
+            payload = payload with { PlayerId = userId };
             var result = await useCase.Do(payload);
 
             return (result.IsSuccess, result.Reason) switch
             {
-                (false, "User not found") => Results.NotFound(),
+                (false, "User not found!") => Results.NotFound(),
                 (false, _) => Results.BadRequest(),
                 (true, _) => Results.Ok()
             };
@@ -72,7 +72,7 @@ public static class UserEndpoints
         }).RequireAuthorization();
 
         /* -------------------------- SEE PLANS -------------------------*/
-        app.MapPut("user/{id}/plan", async(
+        app.MapPut("user/{id}/plan", async (
             Guid id,
             HttpContext http,
             [FromServices] SeePlansUseCase useCase
@@ -86,13 +86,13 @@ public static class UserEndpoints
 
             if (result.IsSuccess)
                 return Results.Ok(result.Data);
-            
+
             return Results.BadRequest(result.Reason);
         }).RequireAuthorization();
 
         /* --------------------- CHANGE ACCOUNT PLAN -------------------------*/
         // PUT: /user/{id}/plan/{code}
-        app.MapPut("user/{id}/plan/{code}", async(
+        app.MapPut("user/{id}/plan/{code}", async (
             Guid id,
             Guid code,
             HttpContext http,
@@ -103,7 +103,7 @@ public static class UserEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
-            payload = payload with {PlayerId = userId, GiftCardId = code};
+            payload = payload with { PlayerId = userId, GiftCardId = code };
             var result = await useCase.Do(payload);
 
             return (result.IsSuccess, result.Reason) switch
@@ -126,14 +126,15 @@ public static class UserEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
-            var payload = new SeeAllInvitesPayload{
+            var payload = new SeeAllInvitesPayload
+            {
                 PlayerId = userId
             };
             var result = await useCase.Do(payload);
 
             if (result.IsSuccess)
                 return Results.Ok(result.Data);
-            
+
             return Results.BadRequest(result.Reason);
         }).RequireAuthorization();
 
@@ -149,15 +150,16 @@ public static class UserEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
-            var payload = new SeeInvitePayload{
+            var payload = new SeeInvitePayload
+            {
                 Id = id,
-                IdInvite = idInvite 
+                IdInvite = idInvite
             };
             var result = await useCase.Do(payload);
 
             if (result.IsSuccess)
                 return Results.Ok(result.Data);
-            
+
             return Results.BadRequest(result.Reason);
         }).RequireAuthorization();
 
@@ -173,14 +175,14 @@ public static class UserEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
-            var payload = new AnswerInvitePayload {InviteId = idInvite, PlayerId = userId};
+            var payload = new AnswerInvitePayload { InviteId = idInvite, PlayerId = userId };
             var result = await useCase.Do(payload);
 
             return (result.IsSuccess, result.Reason) switch
             {
                 (false, "User not found") => Results.NotFound(),
                 (false, _) => Results.BadRequest(),
-                (true, _) => Results.Ok(new {RoomId = result.Data.RoomId})
+                (true, _) => Results.Ok(new { RoomId = result.Data.RoomId })
             };
         }).RequireAuthorization();
 
@@ -212,15 +214,17 @@ public static class UserEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
-            var payload = new SeeMyRoomsPayload{PlayerId = userId};
+            var payload = new SeeMyRoomsPayload { PlayerId = userId };
             var result = await useCase.Do(payload);
 
             if (result.IsSuccess)
                 return Results.Ok(result.Data);
-            
+
             return Results.BadRequest(result.Reason);
         }).RequireAuthorization();
         
+        /* ------------------------- SEE USER ----------------------------*/
+        //GET: user/{id}/
 
     }
 }

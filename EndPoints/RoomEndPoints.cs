@@ -20,14 +20,11 @@ public static class RoomEndpoints
         app.MapGet("/room/{id}", async (
             Guid id,
             HttpContext http,
-            [FromServices] SeePixelsUseCase useCase,
-            [FromServices] IRoomService roomService
+            [FromServices] SeePixelsUseCase useCase
         ) => 
         {
-
-            var payload = new SeePixelsPayload { RoomId = roomId };
+            var payload = new SeePixelsPayload { RoomId = id };
             var result = await useCase.Do(payload);
-
 
             return (result.IsSuccess, result.Reason) switch
             {
@@ -40,13 +37,13 @@ public static class RoomEndpoints
         /* ----------------------- VER OS PLAYERS DA SALA ---------------------------*/
         // GET: /room/{id}/players/
         app.MapGet("/room/{id}/players", async (
-            Guid Id,
+            Guid id,
             HttpContext http,
             [FromServices] SeePlayersUseCase useCase,
             [FromServices] IRoomService roomService
         ) => 
         {
-            var roomIdService = await roomService.FindById(Id);
+            var roomIdService = await roomService.FindById(id);
             if (roomIdService == null) 
                 return Results.NotFound("Room not found");
 
