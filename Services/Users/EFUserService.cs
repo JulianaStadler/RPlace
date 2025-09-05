@@ -39,7 +39,7 @@ public class EFUserService(RPlaceDbContext ctx) : IUsersService
         var player = await ctx.Player.FindAsync(payload.PlayerId);
 
         if (player == null)
-            throw new Exception("Player not found!");
+            throw new Exception("User not found!");
 
         player.Username = payload.Username ?? player.Username;
         player.Email = payload.Email ?? player.Email;

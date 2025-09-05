@@ -42,6 +42,7 @@ public static class RoomEndpoints
             Guid id,
             HttpContext http,
             [FromServices] SeePlayersUseCase useCase
+           
         ) => 
         {
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);

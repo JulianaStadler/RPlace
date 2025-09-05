@@ -9,7 +9,7 @@ public record UpdatePlanUseCase(RPlaceDbContext ctx, IUsersService usersService,
 {
     public async Task<Result<UpdatePlanResponse>> Do(UpdatePlanPayload payload)
     {
-        var user = await ctx.Player.FirstOrDefaultAsync(p => p.Id == payload.PlayerId);
+        var user = await usersService.FindById(payload.PlayerId);
 
         if (user is null)
             return Result<UpdatePlanResponse>.Fail("User does not exist!");
