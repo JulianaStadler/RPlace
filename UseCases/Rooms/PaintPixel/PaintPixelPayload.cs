@@ -28,4 +28,7 @@ public record PaintPixelPayload
     [Required]
     public Guid RoomId {get; init;}
 
+    [Required]
+    public Guid PlayerId {get; init;}
+
 }
