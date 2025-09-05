@@ -47,14 +47,13 @@ public static class RoomEndpoints
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
-
-            var payload = new SeePlayersPayload { RoomId = id };
+            var payload = new SeePlayersPayload { RoomId = id, PlayerId = userId };
             var result = await useCase.Do(payload);
 
             return (result.IsSuccess, result.Reason) switch
             {
                 (false, "Room not found") => Results.NotFound(result.Reason),
-                (false, "No avaliable picture") => Results.NotFound(result.Reason),
+                (false, "You are not in this room!") => Results.Unauthorized(),
                 (false, _) => Results.BadRequest(result.Reason),
                 (true, _) => Results.Ok(result.Data)
             };

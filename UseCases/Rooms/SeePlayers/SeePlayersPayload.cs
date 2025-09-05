@@ -6,4 +6,7 @@ public record SeePlayersPayload
 {
     [Required]
     public Guid RoomId { get; init; }
+
+    [Required]
+    public Guid PlayerId { get; init; }
 }
