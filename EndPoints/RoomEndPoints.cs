@@ -42,13 +42,9 @@ public static class RoomEndpoints
             Guid id,
             HttpContext http,
             [FromServices] SeePlayersUseCase useCase
+           
         ) => 
         {
-            var roomIdService = await roomService.FindById(Id);
-            if (roomIdService == null) 
-                return Results.NotFound("Room not found");
-
-            var roomId = roomIdService.Id;
             var userIdClaim = http.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userIdClaim != null ? Guid.Parse(userIdClaim.Value) : Guid.Empty;
 
