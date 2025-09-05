@@ -20,17 +20,18 @@ public static class RoomEndpoints
         app.MapGet("/room/{id}", async (
             Guid id,
             HttpContext http,
-            [FromServices] SeePixelsUseCase useCase,
-            [FromServices] IRoomService roomService
+            [FromServices] SeePixelsUseCase useCase
         ) => 
         {
 
-            var payload = new SeePixelsPayload { RoomId = roomId };
+            var payload = new SeePixelsPayload { RoomId = id };
             var result = await useCase.Do(payload);
 
 
             return (result.IsSuccess, result.Reason) switch
             {
+                (false, "No rooms") => Results.NotFound(result.Reason),
+                (false, "No avaliable picture") => Results.NotFound(result.Reason),
                 (false, _) => Results.BadRequest(result.Reason),
                 (true, _) => Results.Ok(result.Data)
             };
